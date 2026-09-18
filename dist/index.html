@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="独立创作者的个人作品集。" />
+    <meta name="description" content="王帆的 C# / Unity 客户端开发作品集。" />
     <meta name="theme-color" content="#0b1022" />
-    <title>个人作品集</title>
+    <title>王帆 · Unity 客户端开发</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b1022'/%3E%3Cpath d='M17 46 32 15l15 31h-7l-8-17-8 17z' fill='%23f04e3e'/%3E%3C/svg%3E" />
     <style>
       @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
@@ -45,6 +45,13 @@
       .project h3 { margin:0; font-size:clamp(1.45rem,2.4vw,2.35rem); letter-spacing:-.045em; }
       .project p { margin:0; color:#515667; }
       .go { width:37px; height:37px; display:grid; place-items:center; border:1px solid var(--ink); border-radius:50%; font-size:20px; }
+      .project-detail { display:grid; grid-template-columns:1fr 2fr; gap:28px; padding:36px 0 6px; border-bottom:1px solid var(--line); }
+      .project-detail p { max-width:760px; margin:0; color:#464b5a; font-size:1.04rem; }
+      .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+      .chip { padding:7px 10px; border:1px solid var(--line); border-radius:999px; color:#424757; font:12px 'DM Mono',monospace; }
+      .project-links { display:flex; flex-wrap:wrap; gap:22px; margin-top:25px; font-size:14px; font-weight:600; }
+      .project-links a { border-bottom:1px solid var(--ink); padding-bottom:2px; }
+      .project-links a:hover { color:var(--blue); border-color:var(--blue); }
       .about-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:9vw; align-items:start; }
       .about-copy { margin:0; font-size:clamp(1.45rem,2.4vw,2.45rem); line-height:1.35; letter-spacing:-.045em; }
       .details { display:grid; gap:21px; }
@@ -57,38 +64,44 @@
       .email { display:inline-flex; align-items:center; gap:20px; font-size:clamp(1.3rem,3vw,2.7rem); font-weight:600; letter-spacing:-.04em; border-bottom:1px solid #78809a; padding-bottom:8px; }
       .email:hover { color:#b8c8ff; }
       footer { padding:24px 0 38px; color:#c0c3cb; font:12px 'DM Mono',monospace; }
-      @media (max-width:760px) { .wrap{width:min(100% - 32px,1180px)} .navlinks{gap:14px}.hero{grid-template-columns:1fr; padding-top:52px}.art{min-height:400px}.section-head,.about-grid{grid-template-columns:1fr;gap:22px}.project{grid-template-columns:48px 1fr 38px;gap:10px;padding:22px 0;min-height:0}.project p{grid-column:2/4;font-size:14px}.kind{display:none}.project:hover{padding-inline:8px}.detail{grid-template-columns:90px 1fr}section{padding:75px 0} }
+      @media (max-width:760px) { .wrap{width:min(100% - 32px,1180px)} .navlinks{gap:14px}.hero{grid-template-columns:1fr; padding-top:52px}.art{min-height:400px}.section-head,.about-grid,.project-detail{grid-template-columns:1fr;gap:22px}.project{grid-template-columns:48px 1fr 38px;gap:10px;padding:22px 0;min-height:0}.project p{grid-column:2/4;font-size:14px}.kind{display:none}.project:hover{padding-inline:8px}.detail{grid-template-columns:90px 1fr}section{padding:75px 0} }
     </style>
   </head>
   <body>
     <main>
       <div class="wrap">
         <nav class="nav" aria-label="主导航">
-          <a class="mark" href="#top"><b>Y</b>你的名字</a>
+          <a class="mark" href="#top"><b>W</b>王帆</a>
           <div class="navlinks"><a href="#work">作品</a><a href="#about">关于</a><a href="#contact">联系</a></div>
         </nav>
         <section class="hero" id="top" aria-labelledby="hero-title">
           <div>
-            <p class="eyebrow">作品集 / 2026</p>
-            <h1 id="hero-title">把想法变成<br><em>可感知的体验。</em></h1>
-            <p class="intro">你好，我是你的名字，一名关注品牌、数字产品与叙事体验的独立创作者。</p>
-            <a class="button" href="#work">查看精选作品 <span class="arrow">↘</span></a>
+            <p class="eyebrow">C# / Unity 客户端开发 · 2026</p>
+            <h1 id="hero-title">让每一次操作<br><em>都有清晰的反馈。</em></h1>
+            <p class="intro">你好，我是王帆，一名专注于 C# 与 Unity 客户端开发的在校开发者，正在寻找长期实习机会。</p>
+            <a class="button" href="#work">查看项目经历 <span class="arrow">↘</span></a>
           </div>
           <div class="art" role="img" aria-label="深蓝背景上的金属球与红色线条抽象视觉">
             <div class="orb"></div><div class="thread"></div>
-            <div class="art-note"><span>01 / 03</span><span>个人视觉档案</span></div>
+            <div class="art-note"><span>UNITY 6 / URP</span><span>ROCKET BOOST</span></div>
           </div>
         </section>
-        <p class="scroll">向下浏览 · Selected work</p>
+        <p class="scroll">向下浏览 · Project case study</p>
       </div>
 
       <section class="work" id="work">
         <div class="wrap">
-          <div class="section-head"><p class="label">精选项目</p><h2>用清晰的策略，做有记忆点的作品。</h2></div>
+          <div class="section-head"><p class="label">项目经历</p><h2>从输入到结算，完成一段完整的游戏循环。</h2></div>
           <div class="projects">
-            <a class="project" href="#contact" aria-label="查看山海间品牌识别项目"><span class="number">01</span><div><h3>山海间</h3><span class="kind">品牌识别 / 视觉系统</span></div><p>为独立旅行品牌建立从名称到数字触点的一体化表达。</p><span class="go">↗</span></a>
-            <a class="project" href="#contact" aria-label="查看零点实验室网站项目"><span class="number">02</span><div><h3>零点实验室</h3><span class="kind">网站设计 / 开发</span></div><p>将复杂研究内容转化为易读、可探索的线上叙事。</p><span class="go">↗</span></a>
-            <a class="project" href="#contact" aria-label="查看慢慢来数字体验项目"><span class="number">03</span><div><h3>慢慢来</h3><span class="kind">产品体验 / 内容设计</span></div><p>一个帮助人们留住日常片刻的轻量数字产品。</p><span class="go">↗</span></a>
+            <a class="project" href="https://github.com/fan047/Rocket-Boost" target="_blank" rel="noreferrer" aria-label="在 GitHub 查看 Rocket Boost 项目"><span class="number">01</span><div><h3>Rocket Boost</h3><span class="kind">Unity 3D · 个人开发项目</span></div><p>三关卡太空飞行闯关游戏，围绕物理飞行、避障与关卡流程构建。</p><span class="go">↗</span></a>
+            <div class="project-detail">
+              <p class="label">我的负责内容</p>
+              <div>
+                <p>基于 Unity 6 独立完成输入、飞行控制、碰撞结算、移动障碍与视觉配置；搭建 Over、Under、Through、Gap 四个连续关卡，实现起飞、避障、抵达终点、切换下一关的完整体验。</p>
+                <div class="chips"><span class="chip">Unity 6</span><span class="chip">C#</span><span class="chip">URP</span><span class="chip">Input System</span><span class="chip">Rigidbody</span><span class="chip">Cinemachine</span></div>
+                <div class="project-links"><a href="https://github.com/fan047/Rocket-Boost" target="_blank" rel="noreferrer">查看 GitHub 代码 ↗</a><a href="https://www.bilibili.com/video/BV1LJeG6mEmC/" target="_blank" rel="noreferrer">观看演示视频 ↗</a></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -97,11 +110,12 @@
         <div class="wrap about-grid">
           <p class="label">关于我</p>
           <div>
-            <p class="about-copy">我在概念与落地之间工作：理解问题、建立方向，并把每个细节打磨成自然可信的体验。</p>
+            <p class="about-copy">我关注游戏体验里的每一次输入、移动和反馈，并把它们落实为稳定、可调试的客户端功能。</p>
             <div class="details" style="margin-top:54px">
-              <div class="detail"><strong>擅长领域</strong><span>品牌策略、视觉设计、网页设计、创意开发</span></div>
-              <div class="detail"><strong>合作方式</strong><span>独立项目、长期合作、跨学科团队</span></div>
-              <div class="detail"><strong>所在地</strong><span>中国 · 可远程协作</span></div>
+              <div class="detail"><strong>核心技能</strong><span>C#、面向对象编程、Rigidbody 物理、FixedUpdate、Input System、碰撞与触发判定</span></div>
+              <div class="detail"><strong>开发实践</strong><span>AudioSource 音效、URP 后处理、Cinemachine 相机、Prefab 组织、Git 日常提交</span></div>
+              <div class="detail"><strong>教育背景</strong><span>哈尔滨理工大学 · 网络工程 · 本科在读（2027 年毕业）</span></div>
+              <div class="detail"><strong>实习意向</strong><span>C# / Unity 客户端开发 · 每周可到岗 4-6 天 · 可长期实习</span></div>
             </div>
           </div>
         </div>
@@ -110,9 +124,9 @@
       <section class="contact" id="contact">
         <div class="wrap">
           <p class="label">联系</p>
-          <h2>有想一起完成的项目？<br>欢迎随时写信给我。</h2>
-          <a class="email" href="mailto:hello@example.com">hello@example.com <span>↗</span></a>
-          <footer>© 2026 你的名字 · 所有内容均可替换为你的真实资料</footer>
+          <h2>正在寻找 Unity 客户端开发实习机会。<br>欢迎随时联系我。</h2>
+          <a class="email" href="mailto:2974291990@qq.com">2974291990@qq.com <span>↗</span></a>
+          <footer>© 2026 王帆 · C# / Unity 客户端开发实习生</footer>
         </div>
       </section>
     </main>
