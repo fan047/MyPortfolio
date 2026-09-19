@@ -34,10 +34,6 @@
       .pixel-rocket:before { content:''; position:absolute; top:7px; left:10px; width:29px; height:17px; background:var(--mint); box-shadow:8px -5px 0 -2px var(--mint),8px 5px 0 -2px var(--mint),29px 3px 0 -1px var(--sun); }
       .pixel-rocket:after { content:''; position:absolute; top:11px; left:3px; width:10px; height:9px; background:var(--hot); box-shadow:-7px 2px 0 -2px var(--sun),-13px 3px 0 -3px var(--hot); }
       .rocket-window { position:absolute; z-index:1; top:11px; left:27px; width:7px; height:7px; background:var(--night); box-shadow:2px 2px 0 rgba(7,12,31,.55); }
-      .loader-progress { display:block; }
-      .loader-progress-track { height:16px; padding:3px; border:1px solid var(--line); background:#0b1530; }
-      .loader-progress-fill { position:relative; width:0; height:100%; background:var(--mint); box-shadow:3px 0 0 var(--hot); }
-      .loader-progress-fill:after { content:''; position:absolute; inset:0; opacity:.28; background:repeating-linear-gradient(90deg,transparent 0 9px,var(--night) 9px 12px); }
 
       .sidebar { position:sticky; top:0; height:100vh; display:flex; flex-direction:column; padding:24px 18px; border-right:2px solid var(--line); background:rgba(7,12,31,.9); backdrop-filter:blur(12px); }
       .brand { display:flex; align-items:center; gap:12px; padding:8px 10px 30px; font:12px/1.45 var(--pixel); letter-spacing:.02em; }
@@ -176,7 +172,6 @@
       <div class="loading-panel">
         <p class="loading-word" data-i18n="loadingLabel">LOADING</p>
         <div class="loading-runway" aria-hidden="true"><span class="loading-trail" id="loading-trail"></span><span class="pixel-rocket" id="pixel-rocket"><i class="rocket-window"></i></span></div>
-        <div class="loader-progress"><div class="loader-progress-track"><div class="loader-progress-fill" id="loader-progress-fill"></div></div></div>
       </div>
     </div>
     <div class="shell">
@@ -411,7 +406,6 @@
       else window.addEventListener('load', requestScrollSpyUpdate, { once:true });
 
       const loadingScreen = document.getElementById('loading-screen');
-      const loaderProgressFill = document.getElementById('loader-progress-fill');
       const loadingTrail = document.getElementById('loading-trail');
       const pixelRocket = document.getElementById('pixel-rocket');
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -433,7 +427,6 @@
           const elapsed = duration ? Math.min(1, (now - start) / duration) : 1;
           const progress = 1 - Math.pow(1 - elapsed, 3);
           const percent = Math.round(progress * 100);
-          loaderProgressFill.style.width = `${percent}%`;
           loadingTrail.style.width = `${Math.max(0, percent - 1)}%`;
           pixelRocket.style.left = `${percent}%`;
           if (elapsed < 1) requestAnimationFrame(updateLoader);
