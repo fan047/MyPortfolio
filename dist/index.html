@@ -116,9 +116,15 @@
       .project-showcase figcaption a { color:inherit; text-decoration:underline; text-underline-offset:3px; }
       .project-showcase figcaption a:hover { color:var(--mint); }
       .valley-gallery { position:relative; isolation:isolate; }
-      .valley-gallery::before,.valley-gallery::after { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; border:1px solid #496ba9; background:#101e42; }
+      .valley-gallery::before,.valley-gallery::after { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; border:1px solid #496ba9; background:#101e42; transition:transform .28s cubic-bezier(.2,.8,.2,1),border-color .28s; }
       .valley-gallery::before { transform:translate(5px,5px); }
       .valley-gallery::after { transform:translate(9px,9px); opacity:.65; }
+      .valley-gallery:hover::before,.valley-gallery:focus-within::before { transform:translate(7px,7px); border-color:var(--mint); }
+      .valley-gallery:hover::after,.valley-gallery:focus-within::after { transform:translate(12px,12px); }
+      @keyframes gallery-reveal { from { opacity:.35; transform:translateY(6px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+      @keyframes gallery-count-pop { from { opacity:.45; transform:translateY(3px); } to { opacity:1; transform:translateY(0); } }
+      .gallery-feature.is-switching { animation:gallery-reveal .3s cubic-bezier(.2,.8,.2,1) both; }
+      .gallery-counter.is-switching { animation:gallery-count-pop .24s ease-out both; }
       .valley-gallery .gallery-caption { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:58px; padding:6px 11px; }
       .gallery-label { display:flex; flex-direction:column; gap:2px; white-space:nowrap; }
       .gallery-counter { color:var(--mint); font:10px/1.2 var(--mono); letter-spacing:.08em; }
@@ -203,7 +209,7 @@
       @media (max-width:760px) { .contact-head { align-items:flex-start; flex-direction:column; } .contact-layout { grid-template-columns:1fr; } }
       @media (max-width:620px) { .main { padding-inline:18px; } .topbar { font-size:10px; } .build { display:none; } .hero { padding-bottom:43px; } .hero-name { margin-bottom:8px; font-size:clamp(2.55rem,12vw,3.55rem); } .hero-role-line { gap:8px 14px; } .hero-unity { font-size:clamp(2.25rem,11vw,3.25rem); } .hero-role { font-size:clamp(1.65rem,8vw,2.35rem); } .button { width:100%; } .section-title { font-size:1.08rem; } .section-title em { display:none; } section { padding:48px 0; } .quest { grid-template-columns:minmax(0,1fr); gap:13px; padding:19px; } .project-highlights { grid-template-columns:1fr; } .skill-grid,.about-grid { grid-template-columns:1fr; } .contact-head { padding:21px 19px 18px; } .contact-layout { padding:14px; } .email-link { grid-template-columns:92px minmax(0,1fr) auto; gap:10px; padding:12px; } .contact-method { min-height:104px; padding:14px; } .data-row { grid-template-columns:1fr; gap:6px; } .mission-links a { width:100%; text-align:center; } }
       @media (max-width:440px) { .contact-methods { grid-template-columns:1fr; } .contact-method.phone { grid-column:auto; } .email-link { grid-template-columns:1fr auto; } .email-provider { grid-column:1 / -1; } .email-link .copy-action { grid-column:2; grid-row:1 / span 2; align-self:center; } .copy-feedback { right:18px; bottom:18px; } }
-      @media (prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto!important; transition:none!important; } .loading-screen { transition:none; } }
+      @media (prefers-reduced-motion:reduce) { *,*:before,*:after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } .loading-screen { transition:none; } }
     </style>
   </head>
   <body>
@@ -535,11 +541,21 @@
       const galleryButtons = [...document.querySelectorAll('.valley-gallery .gallery-thumb')];
       galleryButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
+          if (button.getAttribute('aria-pressed') === 'true') return;
+          if (!reduceMotion.matches) {
+            galleryFeature.classList.remove('is-switching');
+            galleryCounter.classList.remove('is-switching');
+            void galleryFeature.offsetWidth;
+          }
           galleryFeature.src = button.dataset.src;
           galleryFeature.dataset.i18nAlt = button.dataset.altKey;
           galleryFeature.alt = translations[currentLanguage][button.dataset.altKey];
           galleryCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(galleryButtons.length).padStart(2, '0')}`;
           galleryButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          if (!reduceMotion.matches) {
+            galleryFeature.classList.add('is-switching');
+            galleryCounter.classList.add('is-switching');
+          }
         });
         button.addEventListener('keydown', (event) => {
           if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
