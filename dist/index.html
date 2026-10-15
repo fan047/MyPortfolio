@@ -96,7 +96,7 @@
       .quest { position:relative; display:grid; grid-template-columns:120px minmax(0,1fr); gap:26px; padding:26px; border:2px solid var(--line); background:linear-gradient(135deg,var(--panel) 0 92%,var(--panel-2) 92%); box-shadow:7px 7px 0 rgba(0,0,0,.24); }
       .quest > div { min-width:0; }
       .quest + .quest { margin-top:18px; }
-      .quest.is-in-progress { border-color:#4b68a4; background:linear-gradient(135deg,#111f46 0 92%,#1a315f 92%); }
+      .quest.is-complete { border-color:#4b68a4; background:linear-gradient(135deg,#111f46 0 92%,#1a315f 92%); }
       .quest-id { color:var(--sun); font:12px/1.7 var(--pixel); }
       .quest-id small { display:block; color:var(--muted); font:10px/1.7 var(--mono); }
       .quest h3 { margin:0; font:clamp(1.35rem,2.5vw,2.15rem)/1.35 var(--pixel); }
@@ -112,6 +112,11 @@
       .project-video-trigger svg { width:38px; height:38px; fill:currentColor; }
       .project-video-trigger small { color:var(--muted); font:11px/1.4 var(--mono); letter-spacing:.12em; }
       .project-video-trigger strong { font:700 16px/1.4 var(--body); }
+      .project-video-trigger.has-cover { position:relative; isolation:isolate; overflow:hidden; color:#effcff; }
+      .project-video-trigger.has-cover::before { content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(5,9,23,.15),rgba(5,9,23,.76)); transition:background .18s; }
+      .project-video-trigger.has-cover:hover::before,.project-video-trigger.has-cover:focus-visible::before { background:linear-gradient(180deg,rgba(5,9,23,.08),rgba(5,9,23,.62)); }
+      .project-showcase .project-video-trigger.has-cover img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+      .project-video-trigger.has-cover svg,.project-video-trigger.has-cover small,.project-video-trigger.has-cover strong { position:relative; z-index:2; filter:drop-shadow(0 1px 4px #050917); }
       .project-showcase figcaption { padding:9px 12px; border-top:1px solid var(--line); color:var(--muted); font:12px/1.5 var(--mono); }
       .project-showcase figcaption a { color:inherit; text-decoration:underline; text-underline-offset:3px; }
       .project-showcase figcaption a:hover { color:var(--mint); }
@@ -141,13 +146,18 @@
       @container (max-width:340px) { .valley-gallery .gallery-caption { flex-wrap:wrap; } .gallery-stack { width:100%; justify-content:flex-start; } }
       @container (max-width:600px) { .project-media-grid { grid-template-columns:minmax(0,1fr); } }
       .quest p { max-width:760px; margin:17px 0 0; color:#c5d3e9; }
-      .project-status { display:inline-flex; margin:14px 0 0; padding:6px 9px; border:1px solid #4b68a4; color:#b7c9ee; background:#0b1530; font:700 11px/1.5 var(--body); letter-spacing:.04em; }
+      .project-status { display:inline-flex; margin:14px 0 0; padding:6px 9px; border:1px solid var(--mint); color:var(--mint); background:#0b1530; font:700 11px/1.5 var(--body); letter-spacing:.04em; }
       .project-highlights { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:21px 0 0; padding:0; list-style:none; }
       .project-highlights li { padding:13px; border-left:2px solid var(--mint); background:rgba(7,12,31,.45); }
       .project-highlights strong { display:block; margin-bottom:4px; color:var(--text); font-size:14px; line-height:1.5; }
       .project-highlights span { display:block; color:var(--muted); font-size:14px; line-height:1.55; }
-      .tag-list { display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 0; padding:0; list-style:none; }
-      .tag { padding:7px 9px; border:1px solid #41619c; color:#b8c9e7; background:#0b1530; font:11px/1.4 var(--mono); }
+      .tech-stack { margin-top:22px; padding:14px 16px; border:1px solid #41619c; background:rgba(7,12,31,.44); }
+      .tech-heading { display:block; margin-bottom:10px; color:var(--mint); font:700 12px/1.4 var(--body); letter-spacing:.05em; }
+      .tech-group { display:grid; grid-template-columns:88px minmax(0,1fr); align-items:start; gap:12px; padding:7px 0; border-top:1px dashed rgba(93,120,168,.5); }
+      .tech-group-label { padding-top:5px; color:var(--muted); font:11px/1.5 var(--body); white-space:nowrap; }
+      .tag-list { display:flex; flex-wrap:wrap; gap:6px; margin:0; padding:0; list-style:none; }
+      .tag { padding:4px 8px; border:1px solid #41619c; color:#b8c9e7; background:#0b1530; font:11px/1.5 var(--mono); white-space:nowrap; }
+      @container (max-width:440px) { .tech-group { grid-template-columns:minmax(0,1fr); gap:4px; } }
       .mission-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:25px; }
       .mission-links a { padding:10px 12px; border:1px solid var(--line); color:var(--text); background:#0b1530; font:700 12px/1.6 var(--body); transition:background .16s,border-color .16s; }
       .mission-links a:first-child { border-color:var(--mint); color:var(--mint); }
@@ -273,7 +283,8 @@
                   <figcaption data-i18n="projectCaption">游戏画面</figcaption>
                 </figure>
                 <figure class="project-showcase">
-                  <button class="project-video-trigger" type="button" aria-label="在页面播放 Rocket Boost 演示视频" data-i18n-aria="projectVideoActionAria">
+                  <button class="project-video-trigger has-cover" type="button" data-bvid="BV1LJeG6mEmC" aria-label="在页面播放 Rocket Boost 演示视频" data-i18n-aria="projectVideoActionAria">
+                    <img src="assets/rocket-boost-gameplay.png" alt="" loading="lazy">
                     <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 11v26l22-13z"/></svg>
                     <small>BILIBILI</small>
                     <strong data-i18n="projectVideoAction">观看演示</strong>
@@ -282,42 +293,54 @@
                 </figure>
               </div>
               <p data-i18n="projectDescription">一款 3D 太空飞行闯关游戏。独立完成物理飞行控制、Input System 输入、碰撞结算、动态障碍与关卡流程，构建从起飞到抵达终点的连续游戏循环。</p>
-              <ul class="tag-list" aria-label="项目技术栈" data-i18n-aria="stackAria"><li class="tag">Unity 6</li><li class="tag">C#</li><li class="tag">URP</li><li class="tag">Input System</li><li class="tag">Rigidbody</li><li class="tag">Cinemachine</li></ul>
+              <div class="tech-stack" aria-label="项目应用技术" data-i18n-aria="stackAria">
+                <strong class="tech-heading" data-i18n="techHeading">应用技术</strong>
+                <div class="tech-group"><span class="tech-group-label" data-i18n="techEngine">引擎与语言</span><ul class="tag-list"><li class="tag">Unity 6</li><li class="tag">C#</li><li class="tag">URP</li></ul></div>
+                <div class="tech-group"><span class="tech-group-label" data-i18n="techGameplay">交互与玩法</span><ul class="tag-list"><li class="tag">Input System</li><li class="tag">Rigidbody</li></ul></div>
+                <div class="tech-group"><span class="tech-group-label" data-i18n="techVisual">关卡与表现</span><ul class="tag-list"><li class="tag">Cinemachine</li></ul></div>
+              </div>
               <div class="mission-links"><a href="https://fan047.itch.io/rocket-boost" target="_blank" rel="noreferrer" data-i18n="playLink">▸ 点击即玩</a><a href="https://github.com/fan047/Rocket-Boost" target="_blank" rel="noreferrer" data-i18n="codeLink">查看代码 ↗</a></div>
             </div>
           </article>
-          <article class="quest is-in-progress">
-            <div class="quest-id">MISSION<br>02<small>UNITY<br>IN PROGRESS</small></div>
+          <article class="quest is-complete">
+            <div class="quest-id">MISSION<br>02<small>UNITY 6<br>COMPLETE</small></div>
             <div>
               <h3>Valley Void</h3>
-              <p class="project-status" role="status" aria-atomic="true" data-i18n="valleyVoidStatus">开发中 · 已开放试玩</p>
+              <p class="project-status" role="status" aria-atomic="true" data-i18n="valleyVoidStatus">已完成 · 可在线试玩</p>
               <div class="project-media-grid">
                 <figure class="project-showcase valley-gallery">
-                  <img class="gallery-feature" src="assets/valley-void-editor.png" width="1123" height="771" alt="Valley Void 在 Unity 编辑器中运行：飞船穿行于陨石和峡谷之间，前方有敌机、准星和分数" data-i18n-alt="valleyVoidImageAlt" loading="lazy">
+                  <img class="gallery-feature" src="assets/valley-void-title-screen.png" width="1192" height="726" alt="Valley Void 标题画面：陨石背景、游戏标题与开始和退出按钮" data-i18n-alt="valleyVoidTitleImageAlt" loading="lazy">
                   <figcaption class="gallery-caption">
                     <span class="gallery-label"><span data-i18n="valleyVoidImageCaption">游戏画面</span><small class="gallery-counter" aria-live="polite">01 / 03</small></span>
                     <span class="gallery-stack" role="group" aria-label="切换 Valley Void 游戏画面" data-i18n-aria="valleyVoidGalleryAria">
-                      <button class="gallery-thumb" type="button" data-src="assets/valley-void-editor.png" data-alt-key="valleyVoidImageAlt" aria-pressed="true" aria-label="显示战斗画面" data-i18n-aria="valleyVoidBattleThumbAria"><img src="assets/valley-void-editor.png" alt="" loading="lazy"></button>
-                      <button class="gallery-thumb" type="button" data-src="assets/valley-void-title-screen.png" data-alt-key="valleyVoidTitleImageAlt" aria-pressed="false" aria-label="显示标题画面" data-i18n-aria="valleyVoidTitleThumbAria"><img src="assets/valley-void-title-screen.png" alt="" loading="lazy"></button>
+                      <button class="gallery-thumb" type="button" data-src="assets/valley-void-title-screen.png" data-alt-key="valleyVoidTitleImageAlt" aria-pressed="true" aria-label="显示标题画面" data-i18n-aria="valleyVoidTitleThumbAria"><img src="assets/valley-void-title-screen.png" alt="" loading="lazy"></button>
+                      <button class="gallery-thumb" type="button" data-src="assets/valley-void-editor.png" data-alt-key="valleyVoidImageAlt" aria-pressed="false" aria-label="显示战斗画面" data-i18n-aria="valleyVoidBattleThumbAria"><img src="assets/valley-void-editor.png" alt="" loading="lazy"></button>
                       <button class="gallery-thumb" type="button" data-src="assets/valley-void-pause-menu.png" data-alt-key="valleyVoidPauseImageAlt" aria-pressed="false" aria-label="显示暂停画面" data-i18n-aria="valleyVoidPauseThumbAria"><img src="assets/valley-void-pause-menu.png" alt="" loading="lazy"></button>
                     </span>
                   </figcaption>
                 </figure>
                 <figure class="project-showcase valley-video">
-                  <video controls playsinline preload="metadata" poster="assets/valley-void-poster.jpg" width="960" height="540" aria-label="Valley Void 54 秒游戏开发演示视频" data-i18n-aria="valleyVoidVideoAria">
-                    <source src="assets/valley-void-demo.mp4" type="video/mp4">
-                    <a href="assets/valley-void-demo.mp4" data-i18n="valleyVoidVideoFallback">下载演示视频</a>
-                  </video>
-                  <figcaption data-i18n="valleyVoidCaption">演示视频 · 54 秒（早期版本）</figcaption>
+                  <button class="project-video-trigger has-cover" type="button" data-bvid="BV1i7Jk68E74" aria-label="在页面播放 Valley Void 完整演示视频" data-i18n-aria="valleyVoidVideoAria">
+                    <img src="assets/valley-void-poster.jpg" alt="" loading="lazy">
+                    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M17 11v26l22-13z"/></svg>
+                    <small>BILIBILI</small>
+                    <strong data-i18n="projectVideoAction">观看演示</strong>
+                  </button>
+                  <figcaption><a href="https://www.bilibili.com/video/BV1i7Jk68E74/" target="_blank" rel="noreferrer" data-i18n="valleyVoidCaption">完整演示视频 · B 站 ↗</a></figcaption>
                 </figure>
               </div>
-              <p data-i18n="valleyVoidDescription">独立开发的 3D 飞行射击原型。完成飞行、瞄准、敌机波次与计分；新增双发激光和光束激光切换，并用 MVC 分层组织输入、武器状态与热键栏反馈。项目仍在开发中。</p>
+              <p data-i18n="valleyVoidDescription">独立开发的 3D 飞行射击游戏。实现飞行、瞄准、敌机波次与计分；支持双发激光和光束激光切换，并用 MVC 分层组织输入、武器状态与热键栏反馈。现已完成并开放试玩。</p>
               <ul class="project-highlights" aria-label="已实现功能" data-i18n-aria="valleyVoidHighlightsAria">
                 <li><strong data-i18n="valleyVoidControlTitle">双武器 · MVC</strong><span data-i18n="valleyVoidControlBody">1/2 键切换双发与光束激光；Model 管理状态，Controller 处理输入，View 响应事件刷新武器栏。</span></li>
                 <li><strong data-i18n="valleyVoidWavesTitle">敌机波次</strong><span data-i18n="valleyVoidWavesBody">Timeline 与 Signal 编排出场，按类型从对象池复用敌机。</span></li>
-                <li><strong data-i18n="valleyVoidFeedbackTitle">战斗反馈</strong><span data-i18n="valleyVoidFeedbackBody">命中、击毁与计分，以及暂停和游戏结束状态。</span></li>
+                <li><strong data-i18n="valleyVoidFeedbackTitle">战斗反馈</strong><span data-i18n="valleyVoidFeedbackBody">命中、击毁与计分，以及暂停、胜利和失败结算。</span></li>
               </ul>
-              <ul class="tag-list" aria-label="项目技术栈" data-i18n-aria="stackAria"><li class="tag">Unity 6</li><li class="tag">C#</li><li class="tag">URP</li><li class="tag">Input System</li><li class="tag">MVC</li><li class="tag">LineRenderer</li><li class="tag">Timeline</li><li class="tag">Object Pool</li></ul>
+              <div class="tech-stack" aria-label="项目应用技术" data-i18n-aria="stackAria">
+                <strong class="tech-heading" data-i18n="techHeading">应用技术</strong>
+                <div class="tech-group"><span class="tech-group-label" data-i18n="techEngine">引擎与语言</span><ul class="tag-list"><li class="tag">Unity 6</li><li class="tag">C#</li><li class="tag">URP</li></ul></div>
+                <div class="tech-group"><span class="tech-group-label" data-i18n="techGameplay">交互与玩法</span><ul class="tag-list"><li class="tag">Input System</li><li class="tag">MVC</li><li class="tag">Object Pool</li><li class="tag">ScriptableObject</li></ul></div>
+                <div class="tech-group"><span class="tech-group-label" data-i18n="techVisual">关卡与表现</span><ul class="tag-list"><li class="tag">Timeline / Signal</li><li class="tag">LineRenderer</li><li class="tag">uGUI</li></ul></div>
+              </div>
               <div class="mission-links"><a href="https://fan047.itch.io/valley-void" target="_blank" rel="noreferrer" data-i18n="playLink">▸ 点击即玩</a><a href="https://github.com/fan047/Valley-Void" target="_blank" rel="noreferrer" data-i18n="valleyVoidCodeLink">查看代码 ↗</a></div>
             </div>
           </article>
@@ -363,7 +386,7 @@
           pageTitle: '王帆 · Unity 客户端开发', pageDescription: '王帆的 C# / Unity 客户端开发作品集。', loadingLabel: 'LOADING', brandHomeAria: '返回首页', brandSub: '玩家作品集', profileLabel: '玩家卡片', profileRole: 'C# / Unity 客户端开发', availability: '可参与实习', menuLabel: '选择任务', portfolioCrumb: '作品集 / 玩家_01', buildLabel: '版本 1.0 · UNITY 客户端', heroEyebrow: '玩家 01 · 就绪', statsTitle: '能力面板', navAria: '页面目录', navHome: '玩家档案', navAbout: '角色资料', navProject: '主线项目', navSkills: '技能装备', navContact: '联络频道',
           heroRole: '客户端开发', heroCopy: '专注 C# 与 Unity 的在校开发者。', projectCta: '进入主线项目', statsAria: '开发者能力面板', playerNote: '目标职业：C# / Unity 客户端开发实习<br>可到岗：每周 4-6 天 · 可长期实习',
           aboutKicker: '玩家信息', aboutTitle: '角色资料', aboutBody: '我是一名使用 Unity 创作游戏的开发者，也是一名始终热爱游戏的玩家。吸引我的，不只是玩法本身，更是一个想法如何在画面、声音与交互中变得真实可感——从第一次按下按键，到抵达终点时的成就感。我希望持续参与这样的创作，把值得被记住的体验交到玩家手中。', educationLabel: '教育经历', educationValue: '哈尔滨理工大学 · 网络工程 · 本科在读（2027 年毕业）',
-          projectKicker: '主线任务', projectTitle: '主线项目', projectImageAlt: 'Rocket Boost 游戏中，火箭在太空基地关卡中飞行', projectCaption: '游戏画面', projectVideoActionAria: '在页面播放 Rocket Boost 演示视频', projectVideoAction: '观看演示', projectVideoCaption: '演示视频 · B 站 ↗', projectDescription: '一款 3D 太空飞行闯关游戏。独立完成物理飞行控制、Input System 输入、碰撞结算、动态障碍与关卡流程，构建从起飞到抵达终点的连续游戏循环。', stackAria: '项目技术栈', playLink: '▸ 点击即玩', codeLink: '查看代码 ↗', demoLink: '观看演示 ↗', valleyVoidStatus: '开发中 · 已开放试玩', valleyVoidImageAlt: 'Valley Void 在 Unity 编辑器中运行：飞船穿行于陨石和峡谷之间，前方有敌机、准星和分数', valleyVoidImageCaption: '游戏画面', valleyVoidTitleImageAlt: 'Valley Void 标题画面：陨石背景、游戏标题与开始和退出按钮', valleyVoidPauseImageAlt: 'Valley Void 暂停画面：飞船、陨石、分数、武器栏与暂停菜单', valleyVoidGalleryAria: '切换 Valley Void 游戏画面', valleyVoidBattleThumbAria: '显示战斗画面', valleyVoidTitleThumbAria: '显示标题画面', valleyVoidPauseThumbAria: '显示暂停画面', valleyVoidVideoAria: 'Valley Void 54 秒游戏开发演示视频', valleyVoidVideoFallback: '下载演示视频', valleyVoidCaption: '演示视频 · 54 秒（早期版本）', valleyVoidDescription: '独立开发的 3D 飞行射击原型。完成飞行、瞄准、敌机波次与计分；新增双发激光和光束激光切换，并用 MVC 分层组织输入、武器状态与热键栏反馈。项目仍在开发中。', valleyVoidHighlightsAria: '已实现功能', valleyVoidControlTitle: '双武器 · MVC', valleyVoidControlBody: '1/2 键切换双发与光束激光；Model 管理状态，Controller 处理输入，View 响应事件刷新武器栏。', valleyVoidWavesTitle: '敌机波次', valleyVoidWavesBody: 'Timeline 与 Signal 编排出场，按类型从对象池复用敌机。', valleyVoidFeedbackTitle: '战斗反馈', valleyVoidFeedbackBody: '命中、击毁与计分，以及暂停和游戏结束状态。', valleyVoidCodeLink: '查看代码 ↗',
+          projectKicker: '主线任务', projectTitle: '主线项目', projectImageAlt: 'Rocket Boost 游戏中，火箭在太空基地关卡中飞行', projectCaption: '游戏画面', projectVideoActionAria: '在页面播放 Rocket Boost 演示视频', projectVideoAction: '观看演示', projectVideoCaption: '演示视频 · B 站 ↗', projectDescription: '一款 3D 太空飞行闯关游戏。独立完成物理飞行控制、Input System 输入、碰撞结算、动态障碍与关卡流程，构建从起飞到抵达终点的连续游戏循环。', stackAria: '项目应用技术', techHeading: '应用技术', techEngine: '引擎与语言', techGameplay: '交互与玩法', techVisual: '关卡与表现', playLink: '▸ 点击即玩', codeLink: '查看代码 ↗', demoLink: '观看演示 ↗', valleyVoidStatus: '已完成 · 可在线试玩', valleyVoidImageAlt: 'Valley Void 在 Unity 编辑器中运行：飞船穿行于陨石和峡谷之间，前方有敌机、准星和分数', valleyVoidImageCaption: '游戏画面', valleyVoidTitleImageAlt: 'Valley Void 标题画面：陨石背景、游戏标题与开始和退出按钮', valleyVoidPauseImageAlt: 'Valley Void 暂停画面：飞船、陨石、分数、武器栏与暂停菜单', valleyVoidGalleryAria: '切换 Valley Void 游戏画面', galleryError: '图片加载失败', valleyVoidBattleThumbAria: '显示战斗画面', valleyVoidTitleThumbAria: '显示标题画面', valleyVoidPauseThumbAria: '显示暂停画面', valleyVoidVideoAria: '在页面播放 Valley Void 完整演示视频', valleyVoidCaption: '完整演示视频 · B 站 ↗', valleyVoidDescription: '独立开发的 3D 飞行射击游戏。实现飞行、瞄准、敌机波次与计分；支持双发激光和光束激光切换，并用 MVC 分层组织输入、武器状态与热键栏反馈。现已完成并开放试玩。', valleyVoidHighlightsAria: '已实现功能', valleyVoidControlTitle: '双武器 · MVC', valleyVoidControlBody: '1/2 键切换双发与光束激光；Model 管理状态，Controller 处理输入，View 响应事件刷新武器栏。', valleyVoidWavesTitle: '敌机波次', valleyVoidWavesBody: 'Timeline 与 Signal 编排出场，按类型从对象池复用敌机。', valleyVoidFeedbackTitle: '战斗反馈', valleyVoidFeedbackBody: '命中、击毁与计分，以及暂停、胜利和失败结算。', valleyVoidCodeLink: '查看代码 ↗',
           skillsKicker: '已装备技能', skillsTitle: '技能装备', programmingTitle: '编程语言', programmingBody: '熟悉 C# 的类与封装、枚举、泛型集合、委托与事件；已用于敌机配置、对象池和游戏状态管理。', unityTitle: 'Unity 开发', unityBody: '在项目中使用场景与预制体、Input System、碰撞检测、Timeline / Signal 和对象池，实现飞船操控、敌机波次与战斗反馈；用 MVC 分层实现武器切换与 UI 同步。', gitTitle: 'Git 版本控制', gitBody: '熟悉 Git 的本地仓库、分支、提交、合并与远程协作流程，能够记录开发过程并管理项目版本。', aiTitle: '工程协作', aiBody: '使用 Codex、DeepSeek Harness 辅助任务拆解、定位问题、代码实现与结果验证。',
           contactKicker: '开放通讯', contactTitle: '联络频道', contactIntro: '选择一种方式与我建立联系，期待和你聊聊游戏与开发。', contactSignal: '通讯通道已开启', emailHubTitle: '邮箱通道', emailHubHint: '点击任意邮箱即可复制', emailLabel: '邮箱', qqEmail: 'QQ 邮箱', neteaseEmail: '网易邮箱', gmail: '谷歌邮箱', phoneLabel: '手机号', wechatLabel: '微信', copyAction: '复制', copySuccess: '已复制到剪贴板', copyFailed: '复制失败，请手动复制', qqEmailAria: '复制 QQ 邮箱：2974291990@qq.com', neteaseEmailAria: '复制 网易邮箱：18904860196@163.com', gmailAria: '复制 谷歌邮箱：demetricedominequejulina@gmail.com', phoneAria: '复制手机号：18904860196', qqAria: '复制 QQ：2974291990', wechatAria: '复制微信：wei318047', footerText: '© 2026 王帆 · 游戏客户端开发 · 档案结束'
         },
@@ -371,7 +394,7 @@
           pageTitle: 'Wang Fan · Unity Client Developer', pageDescription: 'Wang Fan’s C# / Unity client development portfolio.', loadingLabel: 'LOADING', brandHomeAria: 'Back to home', brandSub: 'PLAYER PORTFOLIO', profileLabel: 'PLAYER CARD', profileRole: 'C# / Unity Client Developer', availability: 'AVAILABLE FOR INTERNSHIP', menuLabel: 'SELECT MISSION', portfolioCrumb: 'PORTFOLIO / PLAYER_01', buildLabel: 'BUILD 1.0 · UNITY CLIENT', heroEyebrow: 'PLAYER 01 · READY', statsTitle: 'PLAYER STATS', navAria: 'Page navigation', navHome: 'Home', navAbout: 'Profile', navProject: 'Featured Project', navSkills: 'Skills', navContact: 'Contact',
           heroRole: 'Client Developer', heroCopy: 'A student developer focused on C# and Unity.', projectCta: 'View Featured Project', statsAria: 'Developer capability panel', playerNote: 'Target role: C# / Unity client development intern<br>Availability: 4–6 days per week · Long-term internship',
           aboutKicker: 'PLAYER INFO', aboutTitle: 'Profile', aboutBody: 'I am a Unity game developer and a player who has always loved games. What draws me in is not only gameplay, but also how an idea becomes tangible through visuals, sound, and interaction—from the first input to the satisfaction of reaching the finish. I hope to keep creating memorable experiences for players.', educationLabel: 'EDUCATION', educationValue: 'Harbin University of Science and Technology · Network Engineering · Undergraduate (Graduating 2027)',
-          projectKicker: 'MAIN QUEST', projectTitle: 'Featured Project', projectImageAlt: 'Rocket Boost gameplay: a rocket flying through a space-base level', projectCaption: 'GAME SCREEN', projectVideoActionAria: 'Play the Rocket Boost demo here', projectVideoAction: 'Watch Demo', projectVideoCaption: 'DEMO VIDEO · BILIBILI ↗', projectDescription: 'A 3D space-flight platformer. I independently built flight controls, Input System handling, collision resolution, dynamic obstacles, and level flow to create a continuous gameplay loop from launch to finish.', stackAria: 'Project technology stack', playLink: '▸ Play Now', codeLink: 'View Code ↗', demoLink: 'Watch Demo ↗', valleyVoidStatus: 'IN PROGRESS · PLAYABLE BUILD', valleyVoidImageAlt: 'Valley Void running in the Unity editor: a ship flies among asteroids and canyons with enemies, a crosshair, and a score visible', valleyVoidImageCaption: 'GAME SCREEN', valleyVoidTitleImageAlt: 'Valley Void title screen with an asteroid backdrop, the game title, and Start and Quit buttons', valleyVoidPauseImageAlt: 'Valley Void paused: ship, asteroids, score, weapon hotbar, and pause menu', valleyVoidGalleryAria: 'Choose a Valley Void game screen', valleyVoidBattleThumbAria: 'Show combat screen', valleyVoidTitleThumbAria: 'Show title screen', valleyVoidPauseThumbAria: 'Show pause screen', valleyVoidVideoAria: '54-second Valley Void gameplay development demo', valleyVoidVideoFallback: 'Download demo video', valleyVoidCaption: 'DEMO VIDEO · 54 SEC (EARLIER BUILD)', valleyVoidDescription: 'An independently developed 3D flight shooter prototype with flight controls, aiming, enemy waves, and scoring. I added dual-laser and beam-laser selection, using MVC to separate input, weapon state, and hotbar feedback. The project is still in development.', valleyVoidHighlightsAria: 'Implemented features', valleyVoidControlTitle: 'Two weapons · MVC', valleyVoidControlBody: 'Press 1/2 to switch between dual and beam lasers; the Model stores state, the Controller handles input, and the View updates the hotbar through an event.', valleyVoidWavesTitle: 'Enemy waves', valleyVoidWavesBody: 'Timeline and Signals schedule spawns; enemies are reused from type-based pools.', valleyVoidFeedbackTitle: 'Combat feedback', valleyVoidFeedbackBody: 'Hits, destruction, scoring, pause, and game-over states.', valleyVoidCodeLink: 'View Code ↗',
+          projectKicker: 'MAIN QUEST', projectTitle: 'Featured Project', projectImageAlt: 'Rocket Boost gameplay: a rocket flying through a space-base level', projectCaption: 'GAME SCREEN', projectVideoActionAria: 'Play the Rocket Boost demo here', projectVideoAction: 'Watch Demo', projectVideoCaption: 'DEMO VIDEO · BILIBILI ↗', projectDescription: 'A 3D space-flight platformer. I independently built flight controls, Input System handling, collision resolution, dynamic obstacles, and level flow to create a continuous gameplay loop from launch to finish.', stackAria: 'Project technologies', techHeading: 'Technologies used', techEngine: 'Engine & code', techGameplay: 'Input & gameplay', techVisual: 'Levels & visuals', playLink: '▸ Play Now', codeLink: 'View Code ↗', demoLink: 'Watch Demo ↗', valleyVoidStatus: 'COMPLETE · PLAY ONLINE', valleyVoidImageAlt: 'Valley Void running in the Unity editor: a ship flies among asteroids and canyons with enemies, a crosshair, and a score visible', valleyVoidImageCaption: 'GAME SCREEN', valleyVoidTitleImageAlt: 'Valley Void title screen with an asteroid backdrop, the game title, and Start and Quit buttons', valleyVoidPauseImageAlt: 'Valley Void paused: ship, asteroids, score, weapon hotbar, and pause menu', valleyVoidGalleryAria: 'Choose a Valley Void game screen', galleryError: 'Image unavailable', valleyVoidBattleThumbAria: 'Show combat screen', valleyVoidTitleThumbAria: 'Show title screen', valleyVoidPauseThumbAria: 'Show pause screen', valleyVoidVideoAria: 'Play the complete Valley Void demo here', valleyVoidCaption: 'COMPLETE DEMO · BILIBILI ↗', valleyVoidDescription: 'An independently developed 3D flight shooter with flight controls, aiming, enemy waves, and scoring. It supports dual-laser and beam-laser selection, with MVC separating input, weapon state, and hotbar feedback. The game is complete and playable online.', valleyVoidHighlightsAria: 'Implemented features', valleyVoidControlTitle: 'Two weapons · MVC', valleyVoidControlBody: 'Press 1/2 to switch between dual and beam lasers; the Model stores state, the Controller handles input, and the View updates the hotbar through an event.', valleyVoidWavesTitle: 'Enemy waves', valleyVoidWavesBody: 'Timeline and Signals schedule spawns; enemies are reused from type-based pools.', valleyVoidFeedbackTitle: 'Combat feedback', valleyVoidFeedbackBody: 'Hits, destruction, scoring, pause, victory, and defeat screens.', valleyVoidCodeLink: 'View Code ↗',
           skillsKicker: 'EQUIPPED SKILLS', skillsTitle: 'Skills', programmingTitle: 'Programming', programmingBody: 'Familiar with classes and encapsulation, enums, generic collections, delegates, and events in C#; applied them to enemy configuration, object pooling, and game-state management.', unityTitle: 'Unity Development', unityBody: 'Used scenes and prefabs, the Input System, collision detection, Timeline / Signals, and object pooling to build flight controls, enemy waves, and combat feedback; applied MVC to weapon selection and UI updates.', gitTitle: 'Git Version Control', gitBody: 'Familiar with local repositories, branches, commits, merges, and remote collaboration workflows for tracking development and managing project versions.', aiTitle: 'AI-assisted Workflow', aiBody: 'Use Codex and DeepSeek Harness to break down tasks, investigate issues, implement code, and verify results.',
           contactKicker: 'OPEN COMMS', contactTitle: 'Contact', contactIntro: 'Choose a channel to get in touch and talk games or development.', contactSignal: 'CHANNEL ACTIVE', emailHubTitle: 'EMAIL CHANNELS', emailHubHint: 'Select any address to copy it', emailLabel: 'Email', qqEmail: 'QQ Mail', neteaseEmail: 'NetEase Mail', gmail: 'Gmail', phoneLabel: 'Phone', wechatLabel: 'WeChat', copyAction: 'COPY', copySuccess: 'Copied to clipboard', copyFailed: 'Copy failed — please copy manually', qqEmailAria: 'Copy QQ Mail: 2974291990@qq.com', neteaseEmailAria: 'Copy NetEase Mail: 18904860196@163.com', gmailAria: 'Copy Gmail: demetricedominequejulina@gmail.com', phoneAria: 'Copy Phone: 18904860196', qqAria: 'Copy QQ: 2974291990', wechatAria: 'Copy WeChat: wei318047', footerText: '© 2026 WANG FAN · GAME CLIENT DEVELOPER · END OF PROFILE'
         }
@@ -539,23 +562,36 @@
       const galleryFeature = document.querySelector('.valley-gallery .gallery-feature');
       const galleryCounter = document.querySelector('.valley-gallery .gallery-counter');
       const galleryButtons = [...document.querySelectorAll('.valley-gallery .gallery-thumb')];
+      let galleryRequestId = 0;
       galleryButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
           if (button.getAttribute('aria-pressed') === 'true') return;
-          if (!reduceMotion.matches) {
-            galleryFeature.classList.remove('is-switching');
-            galleryCounter.classList.remove('is-switching');
-            void galleryFeature.offsetWidth;
-          }
-          galleryFeature.src = button.dataset.src;
-          galleryFeature.dataset.i18nAlt = button.dataset.altKey;
-          galleryFeature.alt = translations[currentLanguage][button.dataset.altKey];
-          galleryCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(galleryButtons.length).padStart(2, '0')}`;
-          galleryButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-          if (!reduceMotion.matches) {
-            galleryFeature.classList.add('is-switching');
-            galleryCounter.classList.add('is-switching');
-          }
+          const source = button.dataset.src;
+          const altKey = button.dataset.altKey;
+          if (!source || !translations[currentLanguage][altKey]) return;
+          const requestId = ++galleryRequestId;
+          const preview = new Image();
+          preview.onload = () => {
+            if (requestId !== galleryRequestId) return;
+            if (!reduceMotion.matches) {
+              galleryFeature.classList.remove('is-switching');
+              galleryCounter.classList.remove('is-switching');
+              void galleryFeature.offsetWidth;
+            }
+            galleryFeature.src = source;
+            galleryFeature.dataset.i18nAlt = altKey;
+            galleryFeature.alt = translations[currentLanguage][altKey];
+            galleryCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(galleryButtons.length).padStart(2, '0')}`;
+            galleryButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+            if (!reduceMotion.matches) {
+              galleryFeature.classList.add('is-switching');
+              galleryCounter.classList.add('is-switching');
+            }
+          };
+          preview.onerror = () => {
+            if (requestId === galleryRequestId) galleryCounter.textContent = translations[currentLanguage].galleryError;
+          };
+          preview.src = source;
         });
         button.addEventListener('keydown', (event) => {
           if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
@@ -567,14 +603,16 @@
         });
       });
 
-      document.querySelector('.project-video-trigger').addEventListener('click', (event) => {
-        const player = document.createElement('iframe');
-        player.src = 'https://player.bilibili.com/player.html?bvid=BV1LJeG6mEmC&autoplay=1';
-        player.title = translations[document.documentElement.lang === 'en' ? 'en' : 'zh'].projectVideoActionAria;
-        player.allow = 'autoplay; fullscreen; picture-in-picture';
-        player.setAttribute('allowfullscreen', '');
-        player.referrerPolicy = 'strict-origin-when-cross-origin';
-        event.currentTarget.replaceWith(player);
+      document.querySelectorAll('.project-video-trigger[data-bvid]').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const player = document.createElement('iframe');
+          player.src = `https://player.bilibili.com/player.html?bvid=${encodeURIComponent(trigger.dataset.bvid)}&autoplay=1`;
+          player.title = trigger.getAttribute('aria-label');
+          player.allow = 'autoplay; fullscreen; picture-in-picture';
+          player.setAttribute('allowfullscreen', '');
+          player.referrerPolicy = 'strict-origin-when-cross-origin';
+          trigger.replaceWith(player);
+        });
       });
 
       runLoadingSequence();
